@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "course_intermediates",
+  "info": {
+    "singularName": "course-intermediate",
+    "pluralName": "course-intermediates",
+    "displayName": "CourseIntermediate"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    }
+  }
+}

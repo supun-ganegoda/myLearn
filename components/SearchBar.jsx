@@ -1,6 +1,7 @@
 import { View, StyleSheet, TextInput } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import React from "react";
+import { Colors } from "../constants/Colors";
 
 export default function SearchBar() {
   return (
@@ -20,6 +21,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     elevation: 1,
+    backgroundColor: Colors.light.white,
   },
   placeholder: {
     marginStart: 10,

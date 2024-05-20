@@ -3,6 +3,7 @@ export const Colors = {
     white: "#fff",
     text: "#431407",
     background: "#fb923c",
+    backDrop: "#fff7ed",
     icon: "#687076",
     tabIconDefault: "#687076",
   },
