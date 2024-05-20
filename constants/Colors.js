@@ -1,5 +1,6 @@
 export const Colors = {
   light: {
+    white: "#fff",
     text: "#431407",
     background: "#fb923c",
     icon: "#687076",
