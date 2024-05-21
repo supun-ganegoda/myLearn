@@ -1,14 +1,27 @@
-import { StatusBar, SafeAreaView, StyleSheet, Platform } from "react-native";
+import { StatusBar, StyleSheet, Platform, View } from "react-native";
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
 import { Colors } from "./constants/Colors";
+import CourseViewScreen from "./screens/CourseViewScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.root}>
-      {/* <LoginScreen /> */}
-      <HomeScreen />
-    </SafeAreaView>
+    <View style={styles.root}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="CourseDetails" component={CourseViewScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </View>
   );
 }
 

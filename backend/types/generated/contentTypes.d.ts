@@ -835,6 +835,8 @@ export interface ApiCourseCourse extends Schema.CollectionType {
     title: Attribute.String;
     description: Attribute.Text;
     image: Attribute.Media & Attribute.Required;
+    author: Attribute.String & Attribute.DefaultTo<'Dr. Chandana Gunawardhana'>;
+    topics: Attribute.JSON;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

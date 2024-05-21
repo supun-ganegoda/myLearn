@@ -28,6 +28,13 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "author": {
+      "type": "string",
+      "default": "Dr. Chandana Gunawardhana"
+    },
+    "topics": {
+      "type": "json"
     }
   }
 }

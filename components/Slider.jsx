@@ -5,12 +5,15 @@ import {
   FlatList,
   Dimensions,
   Text,
+  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Colors } from "../constants/Colors";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Slider(props) {
   const [imageList, setImageList] = useState([]);
+  const navigate = useNavigation();
 
   useEffect(() => {
     if (props.data) {
@@ -19,6 +22,8 @@ export default function Slider(props) {
         image: item.attributes.image.data.attributes.url,
         title: item.attributes.title ?? null,
         description: item.attributes.description ?? null,
+        author: item.attributes.author,
+        topics: item.attributes.topics,
       }));
       setImageList(tempList);
     }
@@ -32,13 +37,17 @@ export default function Slider(props) {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
-          <View>
-            <Image
-              source={{ uri: `http://192.168.1.101:1337${item.image}` }}
-              style={styles.sliderImage}
-            />
-            {item.title && <Text style={styles.title}>{item.title}</Text>}
-          </View>
+          <TouchableOpacity
+            onPress={() => navigate.navigate("CourseDetails", { data: item })}
+          >
+            <View>
+              <Image
+                source={{ uri: `http://192.168.1.101:1337${item.image}` }}
+                style={styles.sliderImage}
+              />
+              {item.title && <Text style={styles.title}>{item.title}</Text>}
+            </View>
+          </TouchableOpacity>
         )}
       />
     </View>

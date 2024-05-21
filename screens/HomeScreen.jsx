@@ -32,7 +32,10 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+    >
       <HomeHeader />
       <SearchBar />
       <Slider data={mainBanners} header="Featured" />
