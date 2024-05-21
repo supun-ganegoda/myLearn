@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import HomeHeader from "../components/HomeHeader";
 import SearchBar from "../components/SearchBar";
@@ -9,8 +9,10 @@ import {
   getInterCourseDetails,
   getSliderBanners,
 } from "../services/GlobalApi";
+import LoadingScreen from "../components/LoadingScreen";
 
 export default function HomeScreen() {
+  const [loading, setLoading] = useState(false);
   const [mainBanners, setMainBanners] = useState([]);
   const [beginnerBanners, setBeginnerBanners] = useState([]);
   const [intermediateBanners, setIntermediateBanners] = useState([]);
@@ -18,6 +20,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const res1 = await getSliderBanners();
       const res2 = await getCourseDetails();
       const res3 = await getInterCourseDetails();
@@ -26,6 +29,7 @@ export default function HomeScreen() {
       setBeginnerBanners(res2.data);
       setIntermediateBanners(res3.data);
       setAdvancedBanners(res4.data);
+      setLoading(false);
     };
 
     fetchData();
@@ -38,10 +42,26 @@ export default function HomeScreen() {
     >
       <HomeHeader />
       <SearchBar />
-      <Slider data={mainBanners} header="Featured" />
-      <Slider data={beginnerBanners} header="Beginner Courses" />
-      <Slider data={intermediateBanners} header="Intermediate Courses" />
-      <Slider data={advancedBanners} header="Advanced Courses" />
+      {loading ? (
+        <LoadingScreen />
+      ) : (
+        <Slider data={mainBanners} header="Featured" />
+      )}
+      {loading ? (
+        <LoadingScreen />
+      ) : (
+        <Slider data={beginnerBanners} header="Beginner Courses" />
+      )}
+      {loading ? (
+        <LoadingScreen />
+      ) : (
+        <Slider data={intermediateBanners} header="Intermediate Courses" />
+      )}
+      {loading ? (
+        <LoadingScreen />
+      ) : (
+        <Slider data={advancedBanners} header="Advanced Courses" />
+      )}
     </ScrollView>
   );
 }

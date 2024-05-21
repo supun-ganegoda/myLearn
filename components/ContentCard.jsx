@@ -1,16 +1,10 @@
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../constants/Colors";
 
 export default function ContentCard({ topics }) {
-  return topics.map((item, index) => (
+  return topics?.map((item, index) => (
     <TouchableOpacity key={index} activeOpacity={0.7} style={styles.card}>
       <Text style={styles.index}>
         {index < 10 ? "0" : ""}
