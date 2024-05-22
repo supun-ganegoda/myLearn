@@ -1,5 +1,5 @@
-import { View, StyleSheet, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
+import { StyleSheet, ScrollView } from "react-native";
+import React, { useEffect, useState, useContext } from "react";
 import HomeHeader from "../components/HomeHeader";
 import SearchBar from "../components/SearchBar";
 import Slider from "../components/Slider";
@@ -10,10 +10,10 @@ import {
   getSliderBanners,
 } from "../services/GlobalApi";
 import LoadingScreen from "../components/LoadingScreen";
-import { useRoute } from "@react-navigation/native";
+import { AuthContext } from "../services/AuthContext";
 
 export default function HomeScreen() {
-  const { user } = useRoute().params;
+  const { userData } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [mainBanners, setMainBanners] = useState([]);
   const [beginnerBanners, setBeginnerBanners] = useState([]);
@@ -42,7 +42,7 @@ export default function HomeScreen() {
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
-      <HomeHeader userName={user.username} />
+      <HomeHeader userName={userData.user?.username} />
       <SearchBar />
       {loading ? (
         <LoadingScreen />

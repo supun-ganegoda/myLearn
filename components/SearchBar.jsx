@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     elevation: 1,
     backgroundColor: Colors.light.white,
+    zIndex: -1,
   },
   placeholder: {
     marginStart: 10,

@@ -10,25 +10,34 @@ import {
   Pressable,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { Colors } from "../constants/Colors";
 import { login } from "../services/GlobalApi";
 import { useNavigation } from "@react-navigation/native";
+import AppModal from "../components/AppModal";
+import RegisterForm from "../components/RegisterForm";
+import { AuthContext } from "../services/AuthContext";
 
 export default function LoginScreen() {
+  const { userData, setUserData } = useContext(AuthContext);
   const navigate = useNavigation();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [displayRegister, setDisplayRegister] = useState(false);
 
   const handleLogin = async () => {
     const response = await login({ userName: userName, password: password });
     if (response.error) {
       Alert.alert("Error", response.error.message);
     } else {
-      console.log(response);
-      navigate.navigate("Home", { user: response.user });
+      setUserData(response);
+      navigate.navigate("Home");
     }
+  };
+
+  const handleRegister = () => {
+    setDisplayRegister(!displayRegister);
   };
 
   return (
@@ -62,10 +71,18 @@ export default function LoginScreen() {
         </View>
       </TouchableNativeFeedback>
       <View style={styles.register}>
-        <Pressable onPress={() => console.log("pressed")}>
+        <Pressable onPress={handleRegister}>
           <Text style={styles.registerText}>Register Now</Text>
         </Pressable>
       </View>
+
+      {displayRegister && (
+        <AppModal
+          visible={displayRegister}
+          closeHandler={setDisplayRegister}
+          children={<RegisterForm />}
+        />
+      )}
     </View>
   );
 }

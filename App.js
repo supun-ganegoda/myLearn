@@ -5,23 +5,29 @@ import { Colors } from "./constants/Colors";
 import CourseViewScreen from "./screens/CourseViewScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { AuthContext } from "./services/AuthContext";
+import { useState } from "react";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [userData, setUserData] = useState(null);
+
   return (
     <View style={styles.root}>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="Landing" component={LoginScreen} />
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="CourseDetails" component={CourseViewScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <AuthContext.Provider value={{ userData, setUserData }}>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen name="Landing" component={LoginScreen} />
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="CourseDetails" component={CourseViewScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AuthContext.Provider>
     </View>
   );
 }

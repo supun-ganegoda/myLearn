@@ -57,6 +57,7 @@ export default function Slider(props) {
 const styles = StyleSheet.create({
   container: {
     marginVertical: 10,
+    zIndex: -1,
   },
   header: {
     fontSize: 24,
