@@ -2,12 +2,12 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
 import { Colors } from "../constants/Colors";
 
-export default function HomeHeader() {
+export default function HomeHeader({ userName }) {
   return (
     <View style={styles.container}>
       <View>
         <Text>Hello</Text>
-        <Text style={styles.userName}>Supun</Text>
+        <Text style={styles.userName}>{userName}</Text>
       </View>
       <Image style={styles.avatar} source={require("../assets/avatar.png")} />
     </View>

@@ -10,8 +10,10 @@ import {
   getSliderBanners,
 } from "../services/GlobalApi";
 import LoadingScreen from "../components/LoadingScreen";
+import { useRoute } from "@react-navigation/native";
 
 export default function HomeScreen() {
+  const { user } = useRoute().params;
   const [loading, setLoading] = useState(false);
   const [mainBanners, setMainBanners] = useState([]);
   const [beginnerBanners, setBeginnerBanners] = useState([]);
@@ -40,7 +42,7 @@ export default function HomeScreen() {
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
-      <HomeHeader />
+      <HomeHeader userName={user.username} />
       <SearchBar />
       {loading ? (
         <LoadingScreen />
