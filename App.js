@@ -7,6 +7,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AuthContext } from "./services/AuthContext";
 import { useState } from "react";
+import CourseSectionScreen from "./screens/CourseSectionScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,10 @@ export default function App() {
             <Stack.Screen name="Landing" component={LoginScreen} />
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="CourseDetails" component={CourseViewScreen} />
+            <Stack.Screen
+              name="CourseSection"
+              component={CourseSectionScreen}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </AuthContext.Provider>

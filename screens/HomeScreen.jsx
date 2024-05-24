@@ -1,5 +1,5 @@
-import { StyleSheet, ScrollView } from "react-native";
-import React, { useEffect, useState, useContext } from "react";
+import { StyleSheet, ScrollView, BackHandler } from "react-native";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import HomeHeader from "../components/HomeHeader";
 import SearchBar from "../components/SearchBar";
 import Slider from "../components/Slider";
@@ -11,6 +11,7 @@ import {
 } from "../services/GlobalApi";
 import LoadingScreen from "../components/LoadingScreen";
 import { AuthContext } from "../services/AuthContext";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function HomeScreen() {
   const { userData } = useContext(AuthContext);
@@ -19,6 +20,21 @@ export default function HomeScreen() {
   const [beginnerBanners, setBeginnerBanners] = useState([]);
   const [intermediateBanners, setIntermediateBanners] = useState([]);
   const [advancedBanners, setAdvancedBanners] = useState([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        BackHandler.exitApp(); // send to background
+        return true; // disable the default back action
+      };
+
+      BackHandler.addEventListener("hardwareBackPress", onBackPress);
+
+      return () => {
+        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+      };
+    }, [])
+  );
 
   useEffect(() => {
     const fetchData = async () => {

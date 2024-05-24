@@ -28,7 +28,7 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     const response = await login({ userName: userName, password: password });
-    if (response.error) {
+    if (response?.error) {
       Alert.alert("Error", response.error.message);
     } else {
       setUserData(response);

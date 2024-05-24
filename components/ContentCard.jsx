@@ -2,10 +2,22 @@ import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../constants/Colors";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ContentCard({ topics }) {
+  const navigation = useNavigation();
+
+  const handleSectionNavigation = (topic) => {
+    navigation.navigate("CourseSection", { topic });
+  };
+
   return topics?.map((item, index) => (
-    <TouchableOpacity key={index} activeOpacity={0.7} style={styles.card}>
+    <TouchableOpacity
+      key={index}
+      activeOpacity={0.7}
+      style={styles.card}
+      onPress={() => handleSectionNavigation(item)}
+    >
       <Text style={styles.index}>
         {index < 10 ? "0" : ""}
         {index + 1}
