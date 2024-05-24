@@ -1,8 +1,9 @@
 import { create } from "apisauce";
+import { API_URL, PORT } from "@env";
 
 // define the api
 const api = create({
-  baseURL: "http://192.168.1.102:1337/api",
+  baseURL: `${API_URL}:${PORT}/api`,
 });
 
 export const login = async (userData) => {
