@@ -41,10 +41,7 @@ export default function Slider(props) {
             onPress={() => navigate.navigate("CourseDetails", { data: item })}
           >
             <View>
-              <Image
-                source={{ uri: `http://192.168.1.101:1337${item.image}` }}
-                style={styles.sliderImage}
-              />
+              <Image source={{ uri: item.image }} style={styles.sliderImage} />
               {item.title && <Text style={styles.title}>{item.title}</Text>}
             </View>
           </TouchableOpacity>

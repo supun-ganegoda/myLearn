@@ -27,10 +27,7 @@ export default function CourseViewScreen() {
       <Text style={styles.header}>{data?.title}</Text>
       <Text style={styles.author}>by {data?.author}</Text>
 
-      <Image
-        style={styles.cover}
-        source={{ uri: `http://192.168.1.101:1337${data?.image}` }}
-      />
+      <Image style={styles.cover} source={{ uri: data?.image }} />
       <Text style={[styles.header, styles.title]}>About Course</Text>
       <Text numberOfLines={4} style={[styles.description, styles.author]}>
         {data?.description}
@@ -39,6 +36,7 @@ export default function CourseViewScreen() {
       <Text style={[styles.header, styles.title, styles.content]}>
         Course Content
       </Text>
+
       <ContentCard topics={data?.topics} />
     </ScrollView>
   );
@@ -71,4 +69,5 @@ const styles = StyleSheet.create({
   content: {
     marginBottom: 10,
   },
+  cards: {},
 });

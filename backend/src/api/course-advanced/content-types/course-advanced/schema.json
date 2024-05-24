@@ -28,6 +28,12 @@
     },
     "title": {
       "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "topics": {
+      "type": "json"
     }
   }
 }

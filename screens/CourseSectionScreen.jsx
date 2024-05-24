@@ -6,6 +6,7 @@ import {
   Dimensions,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import React, { useRef, useState, useCallback } from "react";
 import { useRoute } from "@react-navigation/native";
@@ -21,11 +22,17 @@ export default function CourseSectionScreen() {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [btnText, setBtnText] = useState("Next");
   const [playing, setPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const pages = topic.content.length;
 
   const onStateChange = useCallback((state) => {
-    if (state === "ended") {
+    if (state === "playing") {
+      setIsLoading(false);
+      setPlaying(true);
+    } else if (state === "paused" || state === "ended") {
       setPlaying(false);
+    } else if (state === "buffering") {
+      setIsLoading(true);
     }
   }, []);
 
@@ -59,14 +66,29 @@ export default function CourseSectionScreen() {
             <View style={styles.sectionView}>
               <Text style={styles.caption}>{item.caption}</Text>
               {item.utube && (
-                <View style={styles.utube}>
-                  <YoutubePlayer
-                    height={Dimensions.get("window").height * 0.25}
-                    play={playing}
-                    videoId={item.utube}
-                    onChangeState={onStateChange}
-                  />
-                </View>
+                <>
+                  {isLoading && (
+                    <ActivityIndicator
+                      size="large"
+                      color="#0000ff"
+                      style={styles.loader}
+                    />
+                  )}
+                  <View
+                    style={[
+                      styles.utube,
+                      { display: isLoading ? "none" : undefined },
+                    ]}
+                  >
+                    <YoutubePlayer
+                      height={Dimensions.get("window").height * 0.25}
+                      play={playing}
+                      videoId={item.utube}
+                      onChangeState={onStateChange}
+                      onReady={() => setIsLoading(false)}
+                    />
+                  </View>
+                </>
               )}
               {item.web && (
                 <View style={styles.web}>
@@ -127,6 +149,7 @@ const styles = StyleSheet.create({
   utube: {
     padding: 5,
     marginVertical: 10,
+    zIndex: -1,
   },
   web: {
     borderWidth: 1,
@@ -134,5 +157,9 @@ const styles = StyleSheet.create({
     margin: 5,
     width: "auto",
     height: Dimensions.get("window").height * 0.75,
+  },
+  loader: {
+    paddingVertical: 70,
+    zIndex: 10,
   },
 });

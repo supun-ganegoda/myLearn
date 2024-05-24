@@ -39,10 +39,10 @@ export default function HomeScreen() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const res1 = await getSliderBanners();
-      const res2 = await getCourseDetails();
-      const res3 = await getInterCourseDetails();
-      const res4 = await getAdvCourseDetails();
+      const res1 = await getSliderBanners(userData.jwt);
+      const res2 = await getCourseDetails(userData.jwt);
+      const res3 = await getInterCourseDetails(userData.jwt);
+      const res4 = await getAdvCourseDetails(userData.jwt);
       setMainBanners(res1.data);
       setBeginnerBanners(res2.data);
       setIntermediateBanners(res3.data);

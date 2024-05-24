@@ -3,10 +3,6 @@ import { create } from "apisauce";
 // define the api
 const api = create({
   baseURL: "http://192.168.1.102:1337/api",
-  headers: {
-    "X-API-Key":
-      "206e60be8657ff434f5c025cfc55391ee9c30ebff25b95a04a8da7d37af3c4c2c3c42ed7b92c836769807e4f35f928dc50f4cecb69aeb945a6db8b0f0d69ce3cf39434383b6a1364338a11377a4dfdab8128a5410a613449dd2518ae81bf6bc2186edcb92cf3a300ad6789a2a30643ab20477b65043fa736c20792a2a41c279a",
-  },
 });
 
 export const login = async (userData) => {
@@ -45,9 +41,17 @@ export const registerUser = async (userData) => {
   }
 };
 
-export const getSliderBanners = async () => {
+export const getSliderBanners = async (token) => {
   try {
-    const response = await api.get("/banners?populate=*");
+    const response = await api.get(
+      "/banners?populate=*",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (response.ok) {
       return response.data;
     } else {
@@ -60,9 +64,17 @@ export const getSliderBanners = async () => {
   }
 };
 
-export const getCourseDetails = async () => {
+export const getCourseDetails = async (token) => {
   try {
-    const response = await api.get("/courses?populate=*");
+    const response = await api.get(
+      "/courses?populate=*",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (response.ok) {
       return response.data;
     } else {
@@ -75,9 +87,17 @@ export const getCourseDetails = async () => {
   }
 };
 
-export const getInterCourseDetails = async () => {
+export const getInterCourseDetails = async (token) => {
   try {
-    const res = await api.get("/course-intermediates?populate=*");
+    const res = await api.get(
+      "/course-intermediates?populate=*",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (res.ok) {
       return res.data;
     } else {
@@ -90,9 +110,17 @@ export const getInterCourseDetails = async () => {
   }
 };
 
-export const getAdvCourseDetails = async () => {
+export const getAdvCourseDetails = async (token) => {
   try {
-    const res = await api.get("/course-advanceds?populate=*");
+    const res = await api.get(
+      "/course-advanceds?populate=*",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (res.ok) return res.data;
     else {
       console.error("Error: ", res.originalError);
