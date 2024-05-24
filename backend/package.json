@@ -1,12 +1,16 @@
 {
   "name": "backend",
-  "private": true,
   "version": "0.1.0",
-  "description": "A Strapi application",
+  "private": true,
+  "description": "myLearn-backend",
+  "license": "MIT",
+  "author": {
+    "name": "Supun Ganegoda"
+  },
   "scripts": {
+    "build": "strapi build",
     "develop": "strapi develop",
     "start": "strapi start",
-    "build": "strapi build",
     "strapi": "strapi"
   },
   "dependencies": {
@@ -21,15 +25,11 @@
     "react-router-dom": "5.3.4",
     "styled-components": "5.3.3"
   },
-  "author": {
-    "name": "A Strapi developer"
-  },
-  "strapi": {
-    "uuid": "fe28be52-731b-4dd9-be50-6dbe2a7c93bf"
-  },
   "engines": {
     "node": ">=18.0.0 <=20.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "strapi": {
+    "uuid": "fe28be52-731b-4dd9-be50-6dbe2a7c93bf"
+  }
 }

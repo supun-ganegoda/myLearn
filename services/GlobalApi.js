@@ -3,7 +3,7 @@ import { API_URL, PORT } from "@env";
 
 // define the api
 const api = create({
-  baseURL: `${API_URL}:${PORT}/api`,
+  baseURL: `${API_URL}/api`,
 });
 
 export const login = async (userData) => {
