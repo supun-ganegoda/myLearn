@@ -58,7 +58,7 @@ export default function HomeScreen() {
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
-      <HomeHeader userName={userData.user?.username} />
+      <HomeHeader userName={userData?.user?.username} />
       <SearchBar />
       {loading ? (
         <LoadingScreen />

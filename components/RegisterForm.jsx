@@ -12,6 +12,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { registerUser } from "../services/GlobalApi";
 import { AuthContext } from "../services/AuthContext";
 import { useNavigation } from "@react-navigation/native";
+import { storeItem } from "../services/AsyncStorage";
 
 export default LoginForm = ({ closeHandler }) => {
   const { setUserData } = useContext(AuthContext);
@@ -29,6 +30,8 @@ export default LoginForm = ({ closeHandler }) => {
     if (response.error) {
       Alert.alert("Error", response.error.message);
     } else {
+      await storeItem("jwt", response.jwt);
+      await storeItem("userName", response.user.username);
       setUserData(response);
       nav.navigate("Home");
     }

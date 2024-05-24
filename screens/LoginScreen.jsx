@@ -10,7 +10,7 @@ import {
   Pressable,
   Alert,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { Colors } from "../constants/Colors";
 import { login } from "../services/GlobalApi";
@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import AppModal from "../components/AppModal";
 import RegisterForm from "../components/RegisterForm";
 import { AuthContext } from "../services/AuthContext";
+import { getItem, storeItem } from "../services/AsyncStorage";
 
 export default function LoginScreen() {
   const { userData, setUserData } = useContext(AuthContext);
@@ -25,12 +26,16 @@ export default function LoginScreen() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [displayRegister, setDisplayRegister] = useState(false);
+  const [loginCheck, setLoginCheck] = useState(true);
 
   const handleLogin = async () => {
     const response = await login({ userName: userName, password: password });
     if (response?.error) {
       Alert.alert("Error", response.error.message);
     } else {
+      await storeItem("jwt", response.jwt);
+      await storeItem("userName", response.user.username);
+
       setUserData(response);
       navigate.navigate("Home");
     }
@@ -39,6 +44,21 @@ export default function LoginScreen() {
   const handleRegister = () => {
     setDisplayRegister(!displayRegister);
   };
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      const jwtToken = await getItem("jwt");
+      const storedUserName = await getItem("userName");
+
+      if (jwtToken && storedUserName) {
+        setUserData({ jwt: jwtToken, user: { username: storedUserName } });
+        navigate.navigate("Home");
+      }
+      setLoginCheck(false);
+    };
+
+    checkLogin();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -67,7 +87,9 @@ export default function LoginScreen() {
       >
         <View style={styles.signInButton}>
           <AntDesign name="login" size={24} color="black" />
-          <Text style={styles.signText}>Login</Text>
+          <Text style={styles.signText}>
+            {loginCheck ? "Checking..." : "Login"}
+          </Text>
         </View>
       </TouchableNativeFeedback>
       <View style={styles.register}>
@@ -93,6 +115,7 @@ const styles = StyleSheet.create({
     paddingTop: StatusBar.currentHeight,
     alignItems: "center",
     justifyContent: "center",
+    zIndex: -1,
   },
   logo: {
     marginTop: -100,

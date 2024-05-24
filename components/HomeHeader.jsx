@@ -12,15 +12,17 @@ import { Colors } from "../constants/Colors";
 import Menu from "./Menu";
 import { AuthContext } from "../services/AuthContext";
 import { useNavigation } from "@react-navigation/native";
+import { clearStore } from "../services/AsyncStorage";
 
 export default function HomeHeader({ userName }) {
   const { setUserData } = useContext(AuthContext);
   const nav = useNavigation();
   const [menu, setMenu] = useState(false);
 
-  const handleMenuClick = (id) => {
+  const handleMenuClick = async (id) => {
     if (id == 1) {
       setUserData(null);
+      await clearStore();
       nav.navigate("Landing");
     }
   };
