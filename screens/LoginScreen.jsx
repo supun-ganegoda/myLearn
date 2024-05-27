@@ -9,6 +9,7 @@ import {
   Dimensions,
   Pressable,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import React, { useContext, useState, useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
@@ -27,8 +28,10 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const [displayRegister, setDisplayRegister] = useState(false);
   const [loginCheck, setLoginCheck] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
+    setLoading(true);
     const response = await login({ userName: userName, password: password });
     if (response?.error) {
       Alert.alert("Error", response.error.message);
@@ -37,6 +40,7 @@ export default function LoginScreen() {
       await storeItem("userName", response.user.username);
 
       setUserData(response);
+      setLoading(false);
       navigate.navigate("Home");
     }
   };
@@ -85,12 +89,20 @@ export default function LoginScreen() {
         onPress={handleLogin}
         disabled={userName === "" || password === ""}
       >
-        <View style={styles.signInButton}>
-          <AntDesign name="login" size={24} color="black" />
-          <Text style={styles.signText}>
-            {loginCheck ? "Checking..." : "Login"}
-          </Text>
-        </View>
+        {loading ? (
+          <ActivityIndicator
+            size="large"
+            color="#0000ff"
+            style={{ marginTop: 20 }}
+          />
+        ) : (
+          <View style={styles.signInButton}>
+            <AntDesign name="login" size={24} color="black" />
+            <Text style={styles.signText}>
+              {loginCheck ? "Checking..." : "Login"}
+            </Text>
+          </View>
+        )}
       </TouchableNativeFeedback>
       <View style={styles.register}>
         <Pressable onPress={handleRegister}>

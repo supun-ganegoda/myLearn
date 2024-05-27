@@ -1,4 +1,5 @@
-import { StatusBar, StyleSheet, Platform, View } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
 import { Colors } from "./constants/Colors";
@@ -15,7 +16,12 @@ export default function App() {
   const [userData, setUserData] = useState(null);
 
   return (
-    <View style={styles.root}>
+    <SafeAreaView style={styles.root}>
+      <StatusBar
+        hidden={false}
+        backgroundColor={"#ea580c"}
+        barStyle="light-content"
+      />
       <AuthContext.Provider value={{ userData, setUserData }}>
         <NavigationContainer>
           <Stack.Navigator
@@ -33,14 +39,13 @@ export default function App() {
           </Stack.Navigator>
         </NavigationContainer>
       </AuthContext.Provider>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     backgroundColor: Colors.light.backDrop,
   },
 });
